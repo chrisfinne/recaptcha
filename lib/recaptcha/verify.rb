@@ -6,7 +6,7 @@ module Recaptcha
       return true if SKIP_VERIFY_ENV.include? ENV['RAILS_ENV']
       model = options.is_a?(Hash)? options[:model] : options
       private_key = options[:private_key] if options.is_a?(Hash)
-      private_key ||= ENV['RECAPTCHA_PRIVATE_KEY']
+      private_key ||= ENV['RECAPTCHA_PRIVATE_KEY'] || RECAPTCHA_PRIVATE_KEY
       raise RecaptchaError, "No private key specified." unless private_key
       begin
         recaptcha = Net::HTTP.post_form URI.parse("http://#{RECAPTCHA_VERIFY_SERVER}/verify"), {
